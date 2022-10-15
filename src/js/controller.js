@@ -10,11 +10,6 @@ import addRecipeView from './views/addRecipeView.js';
 import 'core-js/stable'; // polyfills everything else
 import 'regenerator-runtime/runtime'; // polyfills async/await
 
-// For Parcel to keep the state
-// if (module.hot) {
-//   module.hot.accept();
-// }
-
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -26,7 +21,6 @@ const controlRecipes = async function () {
 
     // 1) Update bookmarks view
     // console.log(model.state.bookmarks);
-    // bookmarksView.update(model.state.bookmarks); // this doesn't work for some reason. needs a full render
     bookmarksView.render(model.state.bookmarks);
 
     // 2) Loading recipe
@@ -54,7 +48,6 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // 3) Render results
-    // resultsView.render(model.state.search.results);
     resultsView.render(model.getSearchResultsPage());
 
     // 4) Render initial pagination buttons
@@ -63,7 +56,6 @@ const controlSearchResults = async function () {
     console.log(err);
   }
 };
-//controlSearchResults();
 
 const controlAddBookmark = function () {
   // 1) Add or remove bookmark
@@ -90,7 +82,6 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   // Update the recipe view
-  // recipeView.render(model.state.recipe);
   recipeView.update(model.state.recipe);
 };
 
@@ -129,10 +120,6 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
-const newFeature = function() {
-  console.log("Welcome to the application.")
-}
-
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -141,7 +128,6 @@ const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  newFeature();
 };
 
 init();
